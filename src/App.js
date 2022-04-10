@@ -18,7 +18,7 @@ const _errorCheckToken = function(error){
 
   // Get error code.
   const error_code = error["error"]["code"];
-  if (error_code == authApiErrorCode.AUTH_INVALID_TOKEN || error_code == authApiErrorCode.AUTH_EXPIRED_TOKEN){
+  if (error_code == authApiErrorCode.AUTH_INVALID_TOKEN || error_code == authApiErrorCode.AUTH_EXPIRED_TOKEN || error_code == authApiErrorCode.AUTH_REQUIRED){
     // If our token is invalid.
 
     // Redirect to auth provider.
@@ -123,7 +123,6 @@ function Profile(){
     </Card>
     
   </div>);
-//
 }
 
 function App() {
