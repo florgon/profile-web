@@ -37,12 +37,20 @@ function Profile(){
   const [user, setUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
+  const applyAccessToken = function(accessToken){
+    setCookie("access_token", accessToken, {
+      "domain": ".florgon.space",
+      "path": "/"
+    });
+  }
+
   const logout = useCallback(() => {
     /// @description Logout from profile.
-    setCookie("access_token", undefined);
+    applyAccessToken(undefined);
     window.location.href = AUTH_PROVIDER_REDIRECT_URL;
-  }, [setCookie]);
+  }, [applyAccessToken]);
 
+  
   /// Requesting user.
   useEffect(() => {
     authMethodUser(cookies["access_token"], (_, response) => {
