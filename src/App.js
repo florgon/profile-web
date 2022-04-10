@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import { Container, Row, Col, Card, Button, InputGroup, FormControl } from 'react-bootstrap';
 
 // Auth API.
-import { authMethodUser, authApiErrorCode, authApiGetErrorMessageFromCode } from './Api';
+import { authMethodUser, authApiErrorCode, authApiGetErrorMessageFromCode } from './florgon-auth-api';
 
 
 // Where to redirect when auth expired or invalid.

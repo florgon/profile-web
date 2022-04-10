@@ -1,10 +1,21 @@
 /*
-    Florgon auth API library.
-    Used for query auth API for signin/signup/user or any other stuff.
+    `florgon-auth-api`
 
+    Florgon auth API library.
+
+    Used for working with Florgon auth API.
+
+    Current SDK version:
+        v1.0
     Latest auth API version: 
         v1.0.1
 
+    Source code:
+        https://github.com/florgon/auth-sdk
+    
+    API documentation:
+        https://github.com/florgon/auth-api/docs
+    
     Homepages:
         https://profile.florgon.space/
         https://auth.florgon.space/
@@ -17,6 +28,7 @@ const AUTH_API_HTTP_METHOD = "GET";
 const AUTH_API_DEFAULT_HEADERS = {
     "Content-Type": "application/json",
 };
+
 
 /*
    Public methods for end-user.
