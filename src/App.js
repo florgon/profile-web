@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import { Container, Row, Col, Card, Button, InputGroup, FormControl } from 'react-bootstrap';
 
 // Auth API.
-import { authMethodUser, authApiErrorCode, authApiGetErrorMessageFromCode } from '@kirillzhosul/florgon-auth-api';
+import { authMethodUser, authMethodEmailResendConfirmation, authApiErrorCode, authApiGetErrorMessageFromCode } from '@kirillzhosul/florgon-auth-api';
 
 
 // Where to redirect when auth expired or invalid.
@@ -22,7 +22,7 @@ const _errorCheckToken = function(error){
     // If our token is invalid.
 
     // Redirect to auth provider.
-    window.location.href = AUTH_PROVIDER_REDIRECT_URL;
+    //window.location.href = AUTH_PROVIDER_REDIRECT_URL;
   }
 }
 
@@ -39,14 +39,15 @@ const DeactivatedBanner = function(){
     </Card>);
 }
 
-const ConfirmationBanner = function(){
+const ConfirmationBanner = function({onResendConfirmation}){
   /// @description Banner component for not confirmed users.
   return (
     <Card className="shadow-sm mt-3" border="warning">
       <Card.Body>
         <Card.Title as="h2">Please confirm your email</Card.Title>
         <Card.Text>
-          <span className="mb-3 mt-3">Confirmation link was sent to your email.</span>
+          <div className="mb-1 mt-3">Confirmation link was sent to your email.</div>
+          <div className="btn btn-primary btn-sm" onClick={onResendConfirmation}>Resend email.</div>
         </Card.Text>
       </Card.Body>
     </Card>);
@@ -59,11 +60,12 @@ const Profile = function(){
   const [cookies, setCookie] = useCookies(["access_token"])
 
   // States.
+  const [accessToken] = useState(cookies["access_token"]);
   const [error, setError] = useState(undefined);
   const [user, setUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
-  
+
   const applyAccessToken = useCallback((accessToken) => {
     setCookie("access_token", accessToken, {
       "domain": ".florgon.space",
@@ -81,7 +83,7 @@ const Profile = function(){
   
   /// Requesting user.
   useEffect(() => {
-    authMethodUser(cookies["access_token"], (_, response) => {
+    authMethodUser(accessToken, (_, response) => {
       setIsLoading(false);
       setError(undefined);
       setUser(response["success"]["user"]);
@@ -159,7 +161,9 @@ const Profile = function(){
     </Card>
     
     {!user["states"]["is_active"] && <DeactivatedBanner/>}
-    {!user["states"]["is_confirmed"] && <ConfirmationBanner/>}
+    {!user["states"]["is_confirmed"] && <ConfirmationBanner onResendConfirmation={() => {
+      authMethodEmailResendConfirmation(accessToken);
+    }}/>}
   </div>);
 }
 
