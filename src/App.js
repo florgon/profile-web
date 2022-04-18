@@ -63,12 +63,14 @@ const Profile = function(){
   const [user, setUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
-  const applyAccessToken = function(accessToken){
+  
+  const applyAccessToken = useCallback((accessToken) => {
     setCookie("access_token", accessToken, {
       "domain": ".florgon.space",
       "path": "/"
     });
-  }
+  }, [setCookie]);
+
 
   const logout = useCallback(() => {
     /// @description Logout from profile.
