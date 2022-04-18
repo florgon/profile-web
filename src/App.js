@@ -39,6 +39,36 @@ const DeactivatedBanner = function(){
     </Card>);
 }
 
+const ServicesBanner = function(){
+  /// @description Banner component for servic list.
+  return (
+    <Card className="shadow-sm mt-3">
+      <Card.Body>
+        <Card.Title as="h2">Florgon services</Card.Title>
+        <Card.Text>
+          <a href="https://chat.florgon.space" className="btn btn-outline-primary mx-1">Chat</a>
+          <a href="https://notes.florgon.space" className="btn btn-outline-primary mx-1">Notes</a>
+          <a href="https://cc.florgon.space" className="btn btn-outline-primary mx-1 disabled">Link shortener</a>
+          <a href="https://messenger.florgon.space" className="btn btn-outline-primary mx-1 disabled">Messenger</a>
+          <a href="https://blog.florgon.space" className="btn btn-outline-primary mx-1 disabled">Blog</a>
+          <a href="https://dev.florgon.space" className="btn btn-outline-primary mx-1 disabled">Developers portal</a>
+        </Card.Text>
+      </Card.Body>
+    </Card>);
+}
+
+const Footer = function(){
+  /// @description Footer component for servic list.
+  return (<Card className="shadow-sm mt-3">
+  <Card.Body>
+    <Card.Text as="h6">
+      <div>
+        Copyright (c) 2022 <a href="https://florgon.space">Florgon</a>.
+      </div>
+      <a href="https://dev.florgon.space">For developers</a></Card.Text>
+  </Card.Body>
+</Card>);
+}
 const ConfirmationBanner = function({onResendConfirmation}){
   /// @description Banner component for not confirmed users.
   return (
@@ -113,7 +143,7 @@ const Profile = function(){
   const registered_for_days = Math.floor((Date.now() - time_created) / (1000 * 3600 * 24));
 
   return (<div>
-    <Card className="shadow">
+    <Card className="shadow-sm">
       <Card.Body>
         <Card.Title as="h2">Welcome, <span className="text-primary">{user["username"]}</span>!</Card.Title>
         <Card.Text>
@@ -164,6 +194,8 @@ const Profile = function(){
     {!user["states"]["is_confirmed"] && <ConfirmationBanner onResendConfirmation={() => {
       authMethodEmailResendConfirmation(accessToken);
     }}/>}
+    <ServicesBanner/>
+    <Footer/>
   </div>);
 }
 
