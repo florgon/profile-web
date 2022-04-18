@@ -26,7 +26,33 @@ const _errorCheckToken = function(error){
   }
 }
 
-function Profile(){
+const DeactivatedBanner = function(){
+  /// @description Banner component for deactivated users.
+  return (
+    <Card className="shadow-sm mt-3" border="danger">
+      <Card.Body>
+        <Card.Title as="h2">Your account has been suspended!</Card.Title>
+        <Card.Text>
+          <span className="mb-3 mt-3">Contact <a href="mailto: support@florgon.space">support@florgon.space</a> if you think this is due to mistake.</span>
+        </Card.Text>
+      </Card.Body>
+    </Card>);
+}
+
+const ConfirmationBanner = function(){
+  /// @description Banner component for not confirmed users.
+  return (
+    <Card className="shadow-sm mt-3" border="warning">
+      <Card.Body>
+        <Card.Title as="h2">Please confirm your email</Card.Title>
+        <Card.Text>
+          <span className="mb-3 mt-3">Confirmation link was sent to your email.</span>
+        </Card.Text>
+      </Card.Body>
+    </Card>);
+}
+
+const Profile = function(){
   /// @description Profile component with fetching.
 
   // Usings.
@@ -130,10 +156,12 @@ function Profile(){
       </Card.Body>
     </Card>
     
+    {!user["states"]["is_active"] && <DeactivatedBanner/>}
+    {!user["states"]["is_confirmed"] && <ConfirmationBanner/>}
   </div>);
 }
 
-function App() {
+const App = function() {
   // Core application.
   return (
     <div className="App">
