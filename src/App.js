@@ -8,8 +8,7 @@ import { authMethodUser, authMethodEmailResendConfirmation, authApiErrorCode, au
 
 
 // Where to redirect when auth expired or invalid.
-const AUTH_PROVIDER_REDIRECT_URL = "https://auth.florgon.space/?";
-
+const AUTH_PROVIDER_REDIRECT_URL = "https://api.florgon.space/auth/v1/oauth/authorize?client_id=1&state=&scope=&redirect_uri=https://profile.florgon.space&response_type=token";
 
 const _errorCheckToken = function(error){
   /// @description Checks token from error and redirect if it is invalid.
@@ -22,7 +21,7 @@ const _errorCheckToken = function(error){
     // If our token is invalid.
 
     // Redirect to auth provider.
-    window.location.href = AUTH_PROVIDER_REDIRECT_URL;
+    //window.location.href = AUTH_PROVIDER_REDIRECT_URL;
   }
 }
 
@@ -60,15 +59,16 @@ const ServicesBanner = function(){
 const Footer = function(){
   /// @description Footer component for servic list.
   return (<Card className="shadow-sm mt-3">
-  <Card.Body>
-    <Card.Text as="h6">
-      <div>
-        Copyright (c) 2022 <a href="https://florgon.space">Florgon</a>.
-      </div>
-      <a href="https://dev.florgon.space">For developers</a></Card.Text>
-  </Card.Body>
-</Card>);
+    <Card.Body>
+      <Card.Text as="h6">
+        <div>
+          Copyright (c) 2022 <a href="https://florgon.space">Florgon</a>.
+        </div>
+        <a href="https://dev.florgon.space">For developers</a></Card.Text>
+    </Card.Body>
+  </Card>);
 }
+
 const ConfirmationBanner = function({onResendConfirmation}){
   /// @description Banner component for not confirmed users.
   return (
@@ -90,48 +90,62 @@ const Profile = function(){
   const [cookies, setCookie] = useCookies(["access_token"])
 
   // States.
-  const [accessToken] = useState(cookies["access_token"]);
+  const [accessToken] = useState(() => {
+    let token = cookies["access_token"];
+    if (token) return token;
+ 
+    const params = new URLSearchParams(document.location.search)
+    token = params.get("token");
+    if (token){
+      params.delete("token");
+      document.location.search = params;  
+    }
+
+    token = new URLSearchParams(window.location.hash.substr(1)).get("token");
+    if (token){
+      setCookie("access_token", token, {
+        "path": "/"
+      });
+    }
+
+    return token;
+  });
+
+  const [apiError, setApiError] = useState(undefined);
   const [error, setError] = useState(undefined);
   const [user, setUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
 
-  const applyAccessToken = useCallback((accessToken) => {
-    setCookie("access_token", accessToken, {
-      "domain": ".florgon.space",
-      "path": "/"
-    });
-  }, [setCookie]);
-
-
   const logout = useCallback(() => {
     /// @description Logout from profile.
-    applyAccessToken(undefined);
-    window.location.href = AUTH_PROVIDER_REDIRECT_URL;
-  }, [applyAccessToken]);
+    return;
+  }, []);
 
   
   /// Requesting user.
   useEffect(() => {
     authMethodUser(accessToken, (_, response) => {
       setIsLoading(false);
-      setError(undefined);
+      setApiError(undefined);
       setUser(response["success"]["user"]);
     }, (_, error) => {
       setIsLoading(false);
       setUser(undefined);
       if ("error" in error){
         _errorCheckToken(error);
-        setError(error["error"]);
+        setApiError(error["error"]);
       }
     })
-  }, [setIsLoading, setError, setUser]);
+  }, [setIsLoading, setApiError, setUser]);
 
 
-  // Handle error message.
-  if (error) return (<div>
-    Got error when loading user profile information. 
-    Code: ({error["code"]}) {authApiGetErrorMessageFromCode(error["code"])}. Message: {error["message"]}
+  // Handle error messages.
+  if (apiError) return (<div className="display-5 text-danger">
+    <div className="display-6 text-black">{authApiGetErrorMessageFromCode(apiError["code"])} (Code {apiError["code"]})</div> {apiError["message"]}
+  </div>);
+  if (error) return (<div className="display-5 text-danger">
+    {error}
   </div>);
 
   /// Other messages.
@@ -180,7 +194,7 @@ const Profile = function(){
         
         <Row>
           <Col>
-            <Button variant="warning" className="shadow-sm" onClick={logout}>Logout me</Button>
+            <Button variant="warning" className="shadow-sm disabled" onClick={logout}>Logout me</Button>
           </Col>
           <Col>
             <Button variant="primary" className="shadow-sm" href="https://florgon.space" as="a">Go to homepage</Button>
