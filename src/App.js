@@ -21,7 +21,7 @@ const _errorCheckToken = function(error){
     // If our token is invalid.
 
     // Redirect to auth provider.
-    //window.location.href = AUTH_PROVIDER_REDIRECT_URL;
+    window.location.href = AUTH_PROVIDER_REDIRECT_URL;
   }
 }
 
