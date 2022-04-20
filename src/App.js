@@ -99,9 +99,10 @@ const Profile = function(){
     if (token){
       params.delete("token");
       document.location.search = params;  
+    }else{
+      token = new URLSearchParams(window.location.hash.substr(1)).get("token");
     }
 
-    token = new URLSearchParams(window.location.hash.substr(1)).get("token");
     if (token){
       setCookie("access_token", token, {
         "path": "/"
