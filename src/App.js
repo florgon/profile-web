@@ -4,11 +4,8 @@ import { useCookies } from 'react-cookie';
 import { Container, Row, Col, Card, Button, InputGroup, FormControl } from 'react-bootstrap';
 
 // Auth API.
-import { authMethodUser, authMethodEmailResendConfirmation, authApiErrorCode, authApiGetErrorMessageFromCode } from '@kirillzhosul/florgon-auth-api';
+import { authMethodUser, authMethodEmailResendConfirmation, authApiErrorCode, authApiGetErrorMessageFromCode, authApiRedirectOAuthAuthorization } from '@kirillzhosul/florgon-auth-api';
 
-
-// Where to redirect when auth expired or invalid.
-const AUTH_PROVIDER_REDIRECT_URL = "https://api.florgon.space/auth/v1/oauth/authorize?client_id=1&state=&scope=&redirect_uri=https://profile.florgon.space&response_type=token";
 
 const _errorCheckToken = function(error){
   /// @description Checks token from error and redirect if it is invalid.
@@ -21,7 +18,7 @@ const _errorCheckToken = function(error){
     // If our token is invalid.
 
     // Redirect to auth provider.
-    window.location.href = AUTH_PROVIDER_REDIRECT_URL;
+    authApiRedirectOAuthAuthorization(1, "https://profile.florgon.space", "token", "all", "state")
   }
 }
 
