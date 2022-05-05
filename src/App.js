@@ -67,7 +67,13 @@ const Footer = function(){
         <div>
           Copyright (c) 2022 <a href="https://florgon.space">Florgon</a>.
         </div>
-        <a href="https://dev.florgon.space">For developers</a></Card.Text>
+        <div>
+          <a href="https://florgon.space/uploads/legal/privacy-policy.txt">Privacy policy</a>
+          &nbsp;
+          <a href="https://florgon.space/uploads/legal/terms-of-use.txt">Terms of use</a>
+        </div>
+        <a href="https://dev.florgon.space">For developers</a>
+        </Card.Text>
     </Card.Body>
   </Card>);
 }
