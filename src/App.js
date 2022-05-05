@@ -24,6 +24,7 @@ const _errorCheckToken = function(error){
     }
 
     // Redirect to auth provider.
+    removeCookie("access_token");
     authApiRedirectOAuthAuthorization(1, "https://profile.florgon.space", "token", "all", "state")
   }
 }
@@ -96,7 +97,7 @@ const Profile = function(){
   /// @description Profile component with fetching.
 
   // Usings.
-  const [cookies, setCookie] = useCookies(["access_token"])
+  const [cookies, setCookie, removeCookie] = useCookies(["access_token"])
 
   // States.
   const [accessToken] = useState(() => {
@@ -129,9 +130,7 @@ const Profile = function(){
 
   const logout = useCallback(() => {
     /// @description Logout from profile.
-    setCookie("access_token", undefined, {
-      "path": "/"
-    });
+    removeCookie("access_token");
     window.location.href = "https://auth.florgon.space/?action=logout"
   }, []);
 
