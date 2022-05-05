@@ -129,7 +129,10 @@ const Profile = function(){
 
   const logout = useCallback(() => {
     /// @description Logout from profile.
-    return;
+    setCookie("access_token", undefined, {
+      "path": "/"
+    });
+    window.location.href = "https://auth.florgon.space/?action=logout"
   }, []);
 
   
@@ -204,7 +207,7 @@ const Profile = function(){
         
         <Row>
           <Col>
-            <Button variant="warning" className="shadow-sm disabled" onClick={logout}>Logout me</Button>
+            <Button variant="warning" className="shadow-sm" onClick={logout}>Logout me</Button>
           </Col>
           <Col>
             <Button variant="primary" className="shadow-sm" href="https://florgon.space" as="a">Go to homepage</Button>
