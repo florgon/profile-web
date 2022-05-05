@@ -16,6 +16,12 @@ const _errorCheckToken = function(error){
   const error_code = error["error"]["code"];
   if (error_code == authApiErrorCode.AUTH_INVALID_TOKEN || error_code == authApiErrorCode.AUTH_EXPIRED_TOKEN || error_code == authApiErrorCode.AUTH_REQUIRED){
     // If our token is invalid.
+    
+    const hostname = window.location.hostname;
+    if (hostname === "localhost" || hostname === "127.0.0.1" || hostname === ""){
+      // Do not redirect to authentication server if this is localhost.
+      return;
+    }
 
     // Redirect to auth provider.
     authApiRedirectOAuthAuthorization(1, "https://profile.florgon.space", "token", "all", "state")
