@@ -7,7 +7,7 @@ import { Container, Row, Col, Card, Button, InputGroup, FormControl } from 'reac
 import { authMethodUser, authMethodEmailResendConfirmation, authApiErrorCode, authApiGetErrorMessageFromCode, authApiRedirectOAuthAuthorization } from '@kirillzhosul/florgon-auth-api';
 
 
-const _errorCheckToken = function(error){
+const _errorCheckToken = function(error, onRedirect){
   /// @description Checks token from error and redirect if it is invalid.
 
   if (!("error" in error)) return;
@@ -24,7 +24,7 @@ const _errorCheckToken = function(error){
     }
 
     // Redirect to auth provider.
-    removeCookie("access_token");
+    onRedirect()
     authApiRedirectOAuthAuthorization(1, "https://profile.florgon.space", "token", "all", "state")
   }
 }
@@ -145,7 +145,9 @@ const Profile = function(){
       setIsLoading(false);
       setUser(undefined);
       if ("error" in error){
-        _errorCheckToken(error);
+        _errorCheckToken(error, () => {
+          removeCookie("access_token");
+        });
         setApiError(error["error"]);
       }
     })
