@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import { Container, Row, Col, Card, Button, InputGroup, FormControl } from 'react-bootstrap';
 
 // Auth API.
-import { authMethodUser, authMethodEmailResendConfirmation, authApiErrorCode, authApiGetErrorMessageFromCode, authApiRedirectOAuthAuthorization } from '@kirillzhosul/florgon-auth-api';
+import { authApiErrorCode, authApiGetErrorMessageFromCode, authApiRedirectOAuthAuthorization, authMethodUserGetInfo, authMethodEmailResendConfirmation } from '@kirillzhosul/florgon-auth-api';
 
 
 const _errorCheckToken = function(error, onRedirect){
@@ -51,10 +51,8 @@ const ServicesBanner = function(){
         <Card.Text>
           <a href="https://chat.florgon.space" className="btn btn-outline-primary mx-1">Chat</a>
           <a href="https://notes.florgon.space" className="btn btn-outline-primary mx-1">Notes</a>
-          <a href="https://cc.florgon.space" className="btn btn-outline-primary mx-1 disabled">Link shortener</a>
-          <a href="https://messenger.florgon.space" className="btn btn-outline-primary mx-1 disabled">Messenger</a>
-          <a href="https://blog.florgon.space" className="btn btn-outline-primary mx-1 disabled">Blog</a>
-          <a href="https://dev.florgon.space" className="btn btn-outline-primary mx-1 disabled">Developers portal</a>
+          <a href="https://gatey.florgon.space" className="btn btn-outline-primary mx-1">Gatey</a>
+          <a href="https://dev.florgon.space" className="btn btn-outline-primary mx-1">Developers portal</a>
         </Card.Text>
       </Card.Body>
     </Card>);
@@ -131,13 +129,13 @@ const Profile = function(){
   const logout = useCallback(() => {
     /// @description Logout from profile.
     removeCookie("access_token");
-    window.location.href = "https://auth.florgon.space/?action=logout"
+    window.location.href = "https://auth.florgon.space/logout"
   }, []);
 
   
   /// Requesting user.
   useEffect(() => {
-    authMethodUser(accessToken, (_, response) => {
+    authMethodUserGetInfo(accessToken, (_, response) => {
       setIsLoading(false);
       setApiError(undefined);
       setUser(response["success"]["user"]);
