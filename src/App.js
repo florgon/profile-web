@@ -135,11 +135,11 @@ const Profile = function(){
   
   /// Requesting user.
   useEffect(() => {
-    authMethodUserGetInfo(accessToken, (_, response) => {
+    authMethodUserGetInfo(accessToken).then((response) => {
       setIsLoading(false);
       setApiError(undefined);
       setUser(response["success"]["user"]);
-    }, (_, error) => {
+    }).catch((error) => {
       setIsLoading(false);
       setUser(undefined);
       if ("error" in error){
