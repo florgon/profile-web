@@ -25,7 +25,7 @@ const _errorCheckToken = function(error, onRedirect){
 
     // Redirect to auth provider.
     onRedirect()
-    authApiRedirectOAuthAuthorization(1, "https://profile.florgon.space", "token", "all", "state")
+    authApiRedirectOAuthAuthorization(1, "https://profile.florgon.space", "token", "email", "")
   }
 }
 
@@ -67,9 +67,7 @@ const Footer = function(){
           Copyright (c) 2022 <a href="https://florgon.space">Florgon</a>.
         </div>
         <div>
-          <a href="https://florgon.space/uploads/legal/privacy-policy.txt">Privacy policy</a>
-          &nbsp;
-          <a href="https://florgon.space/uploads/legal/terms-of-use.txt">Terms of use</a>
+          <a href="https://florgon.space/legal/privacy-policy">Privacy policy</a>
         </div>
         <a href="https://dev.florgon.space">For developers</a>
         </Card.Text>
@@ -129,7 +127,7 @@ const Profile = function(){
   const logout = useCallback(() => {
     /// @description Logout from profile.
     removeCookie("access_token");
-    window.location.href = "https://auth.florgon.space/logout"
+    window.location.href = "https://oauth.florgon.space/logout"
   }, []);
 
   
