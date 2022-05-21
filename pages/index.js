@@ -1,7 +1,43 @@
 import Head from 'next/head'
 import useAuth from '../contexts/auth';
 import Link from "next/link"
-import {InputGroup, FormControl, Container} from 'react-bootstrap'
+import { useState } from 'react';
+import { authApiRequest } from '@kirillzhosul/florgon-auth-api';
+import {InputGroup, FormControl, Container, Card} from 'react-bootstrap'
+
+const ConfirmationBanner = function({accessToken}){
+/// @description Banner component for not confirmed users.
+    const [isSent, setIsSent] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    return (
+        <Card className="shadow-sm mt-3" border="warning">
+            <Card.Body>
+                <Card.Title as="h2">Please confirm your email!</Card.Title>
+                <Card.Text>
+                <div className="mb-1 mt-3">Confirmation link will be sent to your email.</div>
+                {!(isLoading || isSent) && 
+                    <div className="btn btn-primary btn-sm" onClick={() => {
+                        setIsLoading(true);
+                        authApiRequest("_emailConfirmation.resend", "", accessToken).then(() => {
+                            setIsLoading(false);
+                            setIsSent(true);
+                        }).catch(() => {
+                            setIsLoading(false);
+                        })
+                    }}>Resend confirmation email</div>
+                }
+                {(isLoading && !isSent) && 
+                    <div className="btn btn-secondary btn-sm" disabled>Sending...</div>
+                }
+                {(!isLoading && isSent) && 
+                    <div className="btn btn-success btn-sm" disabled>Email was sent to you!</div>
+                }
+                </Card.Text>
+            </Card.Body>
+        </Card>);
+}
+
 const DeactivatedBanner = function(){
     /// @description Banner component for deactivated users.
     return (
@@ -15,19 +51,6 @@ const DeactivatedBanner = function(){
       </Card>);
 }
 
-const ConfirmationBanner = function({onResendConfirmation}){
-/// @description Banner component for not confirmed users.
-    return (
-        <Card className="shadow-sm mt-3" border="warning">
-        <Card.Body>
-            <Card.Title as="h2">Please confirm your email</Card.Title>
-            <Card.Text>
-            <div className="mb-1 mt-3">Confirmation link was sent to your email.</div>
-            <div className="btn btn-primary btn-sm" onClick={onResendConfirmation}>Resend email.</div>
-            </Card.Text>
-        </Card.Body>
-        </Card>);
-}
 
 export default function Profile() {
     const { user, loading, isAuthenticated, requestOauthAuthorization, accessToken } = useAuth();
@@ -36,7 +59,6 @@ export default function Profile() {
         return (<div className="display-3 text-center"><b>Redirecting to authorization screen...</b></div>);
     }
 
-    console.log(user)
     return (<>
         <Head>
             <meta name="title" content="My developer profile" />
@@ -50,6 +72,8 @@ export default function Profile() {
                     <Link href={`mailto: ${process.env.NEXT_PUBLIC_SUPPORT_EMAIL}`}><a className="btn btn-outline-secondary shadow">Back to homepage</a></Link>
                 </div>
             </div>
+            {!user.states?.is_confirmed && <ConfirmationBanner accessToken={accessToken}/>}
+            {!user.states?.is_active && <DeactivatedBanner/>}
             <div className="row mt-5 mb-5">
                 <div className="col-lg ml-lg-5 text-left">
                     <Container fluid className="w-75">
