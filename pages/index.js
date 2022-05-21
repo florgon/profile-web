@@ -69,7 +69,7 @@ export default function Profile() {
             <div className="display-1 text-center">My Florgon profile</div>
             <div className="row mt-3">
                 <div className="col-lg text-center">
-                    <Link href={`mailto: ${process.env.NEXT_PUBLIC_SUPPORT_EMAIL}`}><a className="btn btn-outline-secondary shadow">Back to homepage</a></Link>
+                    <Link href="https://florgon.space"><a className="btn btn-outline-secondary shadow">Back to homepage</a></Link>
                 </div>
             </div>
             {!user.states?.is_confirmed && <ConfirmationBanner accessToken={accessToken}/>}
@@ -100,11 +100,11 @@ export default function Profile() {
                             <div className="input-group-prepend">
                                 <span className="input-group-text">First name</span>
                             </div>
-                            <FormControl placeholder="Not set" aria-label="First name" type="text" value={user.first_name} disabled/>
+                            <FormControl placeholder="Not set" aria-label="First name" type="text" value={user.first_name} read-only/>
                             <div className="input-group-prepend">
                                 <span className="input-group-text">Last name</span>
                             </div>
-                            <FormControl placeholder="Not set" aria-label="Last name" type="text" value={user.last_name} disabled/>
+                            <FormControl placeholder="Not set" aria-label="Last name" type="text" value={user.last_name} read-only/>
                         </InputGroup>
 
                         <InputGroup className="mb-5">
@@ -122,9 +122,10 @@ export default function Profile() {
                             <InputGroup.Text id="about-me-addon">About me</InputGroup.Text>
                             <FormControl as="textarea"
                                 placeholder="You has not written anything about yourself..."
+                                value={user.profile?.bio}
                                 aria-label="About me"
                                 aria-describedby="about-me-addon"
-                                disabled
+                                read-only
                             />
                         </InputGroup>
 
@@ -132,9 +133,10 @@ export default function Profile() {
                             <InputGroup.Text id="website-addon">Website</InputGroup.Text>
                             <FormControl 
                                 placeholder="Your personal website URL"
+                                value={user.profile?.website}
                                 aria-label="Email"
                                 aria-describedby="website-addon"
-                                disabled
+                                read-only
                             />
                         </InputGroup>
 
@@ -142,23 +144,26 @@ export default function Profile() {
                             <InputGroup.Text id="vk-username-addon">VK username</InputGroup.Text>
                             <FormControl 
                                 placeholder="{username}"
+                                value={user.profile?.socials?.vk}
                                 aria-label="VK username"
                                 aria-describedby="vk-username-addon"
-                                disabled
+                                read-only
                             />
                             <InputGroup.Text id="telegram-username-addon">Telegram username</InputGroup.Text>
                             <FormControl 
                                 placeholder="{username}"
+                                value={user.profile?.socials?.tg}
                                 aria-label="Telegram username"
                                 aria-describedby="telegram-username-addon"
-                                disabled
+                                read-only
                             />
                             <InputGroup.Text id="github-username-addon">GitHub username</InputGroup.Text>
                             <FormControl 
                                 placeholder="{username}"
+                                value={user.profile?.socials?.gh}
                                 aria-label="GitHub username"
                                 aria-describedby="github-username-addon"
-                                disabled
+                                read-only
                             />
                         </InputGroup>
 
