@@ -1,0 +1,160 @@
+import Head from 'next/head'
+import useAuth from '../contexts/auth';
+import Link from "next/link"
+import {InputGroup, FormControl, Container} from 'react-bootstrap'
+const DeactivatedBanner = function(){
+    /// @description Banner component for deactivated users.
+    return (
+      <Card className="shadow-sm mt-3" border="danger">
+        <Card.Body>
+          <Card.Title as="h2">Your account has been suspended!</Card.Title>
+          <Card.Text>
+            <span className="mb-3 mt-3">Contact <a href="mailto: support@florgon.space">support@florgon.space</a> if you think this is due to mistake.</span>
+          </Card.Text>
+        </Card.Body>
+      </Card>);
+}
+
+const ConfirmationBanner = function({onResendConfirmation}){
+/// @description Banner component for not confirmed users.
+    return (
+        <Card className="shadow-sm mt-3" border="warning">
+        <Card.Body>
+            <Card.Title as="h2">Please confirm your email</Card.Title>
+            <Card.Text>
+            <div className="mb-1 mt-3">Confirmation link was sent to your email.</div>
+            <div className="btn btn-primary btn-sm" onClick={onResendConfirmation}>Resend email.</div>
+            </Card.Text>
+        </Card.Body>
+        </Card>);
+}
+
+export default function Profile() {
+    const { user, loading, isAuthenticated, requestOauthAuthorization, accessToken } = useAuth();
+    if (!isAuthenticated && !loading){
+        requestOauthAuthorization()
+        return (<div className="display-3 text-center"><b>Redirecting to authorization screen...</b></div>);
+    }
+
+    console.log(user)
+    return (<>
+        <Head>
+            <meta name="title" content="My developer profile" />
+            <title>My Florgon profile</title>
+        </Head>
+        {(loading) && <div className="display-3 text-center"><b>Loading...</b></div>}
+        {(!loading && isAuthenticated) && <>
+            <div className="display-1 text-center">My Florgon profile</div>
+            <div className="row mt-3">
+                <div className="col-lg text-center">
+                    <Link href={`mailto: ${process.env.NEXT_PUBLIC_SUPPORT_EMAIL}`}><a className="btn btn-outline-secondary shadow">Back to homepage</a></Link>
+                </div>
+            </div>
+            <div className="row mt-5 mb-5">
+                <div className="col-lg ml-lg-5 text-left">
+                    <Container fluid className="w-75">
+                        <InputGroup className="mb-2 shadow-sm">
+                            <InputGroup.Text id="username-addon">Username</InputGroup.Text>
+                            <FormControl
+                                placeholder={user.username}
+                                aria-label="Username"
+                                aria-describedby="username-addon"
+                                disabled
+                            />
+                        </InputGroup>
+                        <InputGroup className="mb-3 shadow-sm">
+                            <InputGroup.Text id="email-addon">E-Mail</InputGroup.Text>
+                            <FormControl 
+                                placeholder={user.email}
+                                aria-label="Email"
+                                aria-describedby="email-addon"
+                                disabled
+                            />
+                        </InputGroup>
+
+                        <InputGroup className="mb-4 shadow-sm">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">First name</span>
+                            </div>
+                            <FormControl placeholder="Not set" aria-label="First name" type="text" value={user.first_name} disabled/>
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">Last name</span>
+                            </div>
+                            <FormControl placeholder="Not set" aria-label="Last name" type="text" value={user.last_name} disabled/>
+                        </InputGroup>
+
+                        <InputGroup className="mb-5">
+                            <InputGroup.Text id="privacy-profile-public-addon">Keep my public profile private</InputGroup.Text>
+                            <InputGroup.Checkbox
+                                disabled
+                            />
+                            <InputGroup.Text id="privacy-profile-public-addon">Show my public profile only for authorized users</InputGroup.Text>
+                            <InputGroup.Checkbox
+                                disabled
+                            />
+                        </InputGroup>
+
+                        <InputGroup className="mb-2 shadow-sm">
+                            <InputGroup.Text id="about-me-addon">About me</InputGroup.Text>
+                            <FormControl as="textarea"
+                                placeholder="You has not written anything about yourself..."
+                                aria-label="About me"
+                                aria-describedby="about-me-addon"
+                                disabled
+                            />
+                        </InputGroup>
+
+                        <InputGroup className="mb-2 shadow-sm">
+                            <InputGroup.Text id="website-addon">Website</InputGroup.Text>
+                            <FormControl 
+                                placeholder="Your personal website URL"
+                                aria-label="Email"
+                                aria-describedby="website-addon"
+                                disabled
+                            />
+                        </InputGroup>
+
+                        <InputGroup className="mb-5 shadow-sm">
+                            <InputGroup.Text id="vk-username-addon">VK username</InputGroup.Text>
+                            <FormControl 
+                                placeholder="{username}"
+                                aria-label="VK username"
+                                aria-describedby="vk-username-addon"
+                                disabled
+                            />
+                            <InputGroup.Text id="telegram-username-addon">Telegram username</InputGroup.Text>
+                            <FormControl 
+                                placeholder="{username}"
+                                aria-label="Telegram username"
+                                aria-describedby="telegram-username-addon"
+                                disabled
+                            />
+                            <InputGroup.Text id="github-username-addon">GitHub username</InputGroup.Text>
+                            <FormControl 
+                                placeholder="{username}"
+                                aria-label="GitHub username"
+                                aria-describedby="github-username-addon"
+                                disabled
+                            />
+                        </InputGroup>
+
+
+
+                        <InputGroup className="mb-4 shadow-sm">
+                            <InputGroup.Text id="registered-for-addon">Florgon member since</InputGroup.Text>
+                            <FormControl
+                                placeholder={`${new Date(user.time_created * 1000).toDateString()} (${Math.floor((Date.now() - new Date(user.time_created * 1000)) / (1000 * 3600 * 24))} days)`}
+                                aria-label="Florgon member for"
+                                aria-describedby="registered-for-addon"
+                                disabled
+                            />
+                        </InputGroup>
+                        <Link href={`https://users.florgon.space/${user.username}`}><a className="btn btn-primary shadow mb-1">Your public profile</a></Link>&nbsp;
+                        <Link href={`https://users.florgon.space/${user.username}`}><a className="btn btn-outline-primary shadow mb-1">Your developer profile</a></Link>&nbsp;
+                        <Link href="https://oauth.florgon.space/logout?revoke_all"><a className="btn btn-outline-secondary shadow mb-1">Logout from all devices</a></Link>
+                    </Container>
+                </div>
+            </div>
+        </>}
+    </>)
+}
