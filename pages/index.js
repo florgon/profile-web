@@ -179,7 +179,7 @@ export default function Profile() {
                             />
                         </InputGroup>
                         <Link href={`https://users.florgon.space/${user.username}`}><a className="btn btn-primary shadow mb-1">Your public profile</a></Link>&nbsp;
-                        <Link href={`https://users.florgon.space/${user.username}`}><a className="btn btn-outline-primary shadow mb-1">Your developer profile</a></Link>&nbsp;
+                        <Link href="https://dev.florgon.space/profile"><a className="btn btn-outline-primary shadow mb-1">Your developer profile</a></Link>&nbsp;
                         <Link href="https://oauth.florgon.space/logout?revoke_all"><a className="btn btn-outline-secondary shadow mb-1">Logout from all devices</a></Link>
                     </Container>
                 </div>
