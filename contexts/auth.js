@@ -37,27 +37,9 @@ const AuthProvider = ({ children }) => {
         authApiRedirectOAuthAuthorization(clientId, redirectUri, "token", "email,noexpire", "");
     }
 
-    const logoutUserAccessToken = () => {
-        removeCookie(process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_NAME, {
-            "domain": process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_DOMAIN,
-            "path": "/"
-        });
-        removeCookie(process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_NAME, {
-            "domain": process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_DOMAIN_USERS,
-            "path": "/"
-        });
-        setUser(null);
-        window.location.pathname = "/";
-    }
-
     const loginUserWithAcessToken = (accessToken) => {
         setCookie(process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_NAME, accessToken, {
             "domain": process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_DOMAIN,
-            "maxAge": parseInt(process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_MAX_AGE),
-            "path": "/"
-        });
-        setCookie(process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_NAME, accessToken, {
-            "domain": process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_DOMAIN_USERS,
             "maxAge": parseInt(process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_MAX_AGE),
             "path": "/"
         });
@@ -70,8 +52,7 @@ const AuthProvider = ({ children }) => {
         user, accessToken,
 
         requestOauthAuthorization, 
-        loginUserWithAcessToken,
-        logoutUserAccessToken 
+        loginUserWithAcessToken
     }
 
     return (
