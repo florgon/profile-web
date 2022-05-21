@@ -42,6 +42,10 @@ const AuthProvider = ({ children }) => {
             "domain": process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_DOMAIN,
             "path": "/"
         });
+        removeCookie(process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_NAME, {
+            "domain": process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_DOMAIN_USERS,
+            "path": "/"
+        });
         setUser(null);
         window.location.pathname = "/";
     }
@@ -49,6 +53,11 @@ const AuthProvider = ({ children }) => {
     const loginUserWithAcessToken = (accessToken) => {
         setCookie(process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_NAME, accessToken, {
             "domain": process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_DOMAIN,
+            "maxAge": parseInt(process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_MAX_AGE),
+            "path": "/"
+        });
+        setCookie(process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_NAME, accessToken, {
+            "domain": process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_DOMAIN_USERS,
             "maxAge": parseInt(process.env.NEXT_PUBLIC_ACCESS_TOKEN_COOKIE_MAX_AGE),
             "path": "/"
         });
