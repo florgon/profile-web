@@ -51,6 +51,55 @@ const DeactivatedBanner = function(){
       </Card>);
 }
 
+const VIPBanner = function(){
+    return (
+        <Card className="shadow-sm mt-3"  border="success">
+          <Card.Body>
+            <Card.Title as="h2">
+                Florgon VIP
+            </Card.Title>
+            <Card.Text>
+              <span className="mb-3 mt-3">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-stars" viewBox="0 0 16 16">
+                        <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"/>
+                    </svg>
+                    {" "}
+                    You are Florgon VIP user! Enjoy your day! Thanks for your support!
+                    {" "}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-stars" viewBox="0 0 16 16">
+                        <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828l.645-1.937zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.734 1.734 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.734 1.734 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.734 1.734 0 0 0 3.407 2.31l.387-1.162zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L10.863.1z"/>
+                    </svg>
+                <br/></span>
+              </span>
+            </Card.Text>
+          </Card.Body>
+        </Card>);
+}
+
+const AdminBanner = function(){
+    return (
+        <Card className="shadow-sm mt-3" border="danger">
+          <Card.Body>
+            <Card.Title as="h2">
+                Welcome, master!
+            </Card.Title>
+            <Card.Text>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-fill-exclamation" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm-.55 8.502L7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0zM8.002 12a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                </svg>
+                {" "}
+                You are granted admin privileges. You are able to access administrator pages.
+                {" "}
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-fill-exclamation" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm-.55 8.502L7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0zM8.002 12a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                </svg>
+            </Card.Text>
+          </Card.Body>
+        </Card>);
+
+}
+
 
 export default function Profile() {
     const { user, loading, isAuthenticated, requestOauthAuthorization, accessToken } = useAuth();
@@ -74,6 +123,9 @@ export default function Profile() {
             </div>
             {!user.states?.is_confirmed && <ConfirmationBanner accessToken={accessToken}/>}
             {!user.states?.is_active && <DeactivatedBanner/>}
+            {user.states?.is_vip && <VIPBanner/>}
+            {user.states?.is_admin && <AdminBanner/>}
+
             <div className="row mt-5 mb-5">
                 <div className="col-lg ml-lg-5 text-left">
                     <Container fluid className="w-75">
@@ -178,9 +230,14 @@ export default function Profile() {
                                 disabled
                             />
                         </InputGroup>
-                        <Link href={`https://users.florgon.space/${user.username}`}><a className="btn btn-primary shadow mb-1">Your public profile</a></Link>&nbsp;
-                        <Link href="https://dev.florgon.space/profile"><a className="btn btn-outline-primary shadow mb-1">Your developer profile</a></Link>&nbsp;
-                        <Link href="https://oauth.florgon.space/logout?revoke_all"><a className="btn btn-outline-secondary shadow mb-1">Logout from all devices</a></Link>
+                        <div className="mb-2">
+                            <Link href={`https://users.florgon.space/${user.username}`}><a className="btn btn-primary shadow mb-1">Your public profile</a></Link>&nbsp;
+                            <Link href="https://dev.florgon.space/profile"><a className="btn btn-outline-primary shadow mb-1">Your developer profile</a></Link>&nbsp;
+                        </div>
+                        <div className="mb-5">
+                            <Link href="https://oauth.florgon.space/logout?revoke_all"><a className="btn btn-outline-secondary shadow mb-1">Logout from all devices</a></Link>&nbsp;
+                            <Link href="https://oauth.florgon.space/logout"><a className="btn btn-outline-secondary shadow mb-1">Logout from this device</a></Link>
+                        </div>
                     </Container>
                 </div>
             </div>
