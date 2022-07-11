@@ -101,6 +101,24 @@ const AdminBanner = function(){
 }
 
 
+const calculateProfileFillness = function(user){
+    const elements = [
+        user?.avatar, 
+        user?.first_name, user?.last_name, 
+        user?.profile?.bio, user?.profile?.website, 
+        user?.profile?.socials?.vk,
+        user?.profile?.socials?.tg,
+        user?.profile?.socials?.gh
+    ];
+    const fillness = 0;
+    elements.forEach(element => {
+        if (element === undefined) return;
+        if (element == "") return;
+        fillness += 100 / elements.length;
+    });
+    return Math.floor(fillness);
+}
+
 export default function Profile() {
     const { user, loading, isAuthenticated, requestOauthAuthorization, accessToken } = useAuth();
     if (!isAuthenticated && !loading){
@@ -108,6 +126,7 @@ export default function Profile() {
         return (<div className="display-3 text-center"><b>Redirecting to authorization screen...</b></div>);
     }
 
+    const profileFillness = calculateProfileFillness(user);
     return (<>
         <Head>
             <meta name="title" content="My developer profile" />
@@ -116,18 +135,29 @@ export default function Profile() {
         {(loading) && <div className="display-3 text-center"><b>Loading...</b></div>}
         {(!loading && isAuthenticated) && <>
             <div className="display-1 text-center">My Florgon profile</div>
+            <h4 className="col-lg text-center mb-3 mt-3">
+                    Your profile filled on <span className="text-primary">{profileFillness}</span>%
+                    {profileFillness < 100 && <>
+                        <br/>
+                        Please enter more information about you!
+                    </>}
+                </h4>
             <div className="row mt-3">
                 <div className="col-lg text-center">
                     <Link href="https://florgon.space"><a className="btn btn-outline-secondary shadow">Back to homepage</a></Link>
                 </div>
+                <div>
+            </div>
             </div>
             {!user.states?.is_confirmed && <ConfirmationBanner accessToken={accessToken}/>}
             {!user.states?.is_active && <DeactivatedBanner/>}
             {user.states?.is_vip && <VIPBanner/>}
             {user.states?.is_admin && <AdminBanner/>}
 
+
             <div className="row mt-5 mb-5">
                 <div className="col-lg ml-lg-5 text-left">
+                    
                     <Container fluid className="w-75">
                         <InputGroup className="mb-2 shadow-sm">
                             <InputGroup.Text id="username-addon">Username</InputGroup.Text>
