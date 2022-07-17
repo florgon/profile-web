@@ -127,7 +127,7 @@ const calculateProfileFillness = function(user){
 
 export default function Profile() {
     const { user, loading, isAuthenticated, requestOauthAuthorization, accessToken } = useAuth();
-    const [vipModalOpened, setVipModalOpened] = useState(true);
+    const [vipModalOpened, setVipModalOpened] = useState(false);
     if (!isAuthenticated && !loading){
         requestOauthAuthorization()
         return (<div className="display-3 text-center"><b>Redirecting to authorization screen...</b></div>);
