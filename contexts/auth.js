@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
         if (typeof window === "undefined") return;
         const clientId = process.env.NEXT_PUBLIC_FLORGON_OAUTH_CLIENT_ID;
         const redirectUri = `${process.env.NEXT_PUBLIC_FLORGON_OAUTH_REDIRECT_URI_DOMAIN}/oauth/callback`
-        authApiRedirectOAuthAuthorization(clientId, redirectUri, "token", "email,noexpire", "");
+        authApiRedirectOAuthAuthorization(clientId, redirectUri, "token", "email,edit,sessions", "");
     }
 
     const loginUserWithAcessToken = (accessToken) => {
